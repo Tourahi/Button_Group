@@ -24,31 +24,33 @@ function ButtonGroup:draw(ww,wh)
   local bx = 0;
   local by = 0;
   for i,button in ipairs(self.group) do
-    print("Current FPS: "..tostring(love.timer.getFPS( )));
     button.last = button.now;
     bx = Cww - (button.width * 0.5);
     by = Cwh - (self.total_height  * 0.5) + cursor_y;
-    local bgColor = {0.49,0.49,0.49,1.0};
-    local textColor = {0.0,0.0,0.0,1.0};
+    
     local mx,my = love.mouse.getPosition();
     local isHover = mx > bx and mx < bx + button.width and
                     my > by and my < by + button.height;
     if isHover then
-      bgColor = {1.0,1.0,0.9,1.0};
+      love.graphics.setColor(unpack(button.hoverColor));
+    else
+      love.graphics.setColor(unpack(button.bgColor));
     end
+
     button.now = love.mouse.isDown(1);
     if button.now and not button.last and isHover then
       button.callback();
     end
-    love.graphics.setColor(unpack(bgColor));
     love.graphics.rectangle("fill",
       bx,
       by,
       button.width,
-      button.height
+      button.height,
+      button.borderRadiusX,
+      button.borderRadiusY
     );
 
-    love.graphics.setColor(unpack(textColor));
+    love.graphics.setColor(unpack(button.textColor));
     local textW = self.font:getWidth(button.text);
     local textH = self.font:getHeight(button.text);
     love.graphics.print(
