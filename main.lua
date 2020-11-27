@@ -44,5 +44,5 @@ end
 function love.draw()
   love.graphics.setColor(0, 1, 0, 1);
   love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10);
-  mainBtns:draw(ww,wh);
+  mainBtns:draw(ww*0.35,wh*0.50);
 end

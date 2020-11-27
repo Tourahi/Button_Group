@@ -7,13 +7,13 @@ function ButtonGroup.new(groupName,margin,font)
     groupName = groupName,
     group = {},
     margin = margin,
-    total_height = 0,
+    _total_height = 0,
     font = love.graphics.newFont(font)
   },ButtonGroup);
 end
 
 function ButtonGroup:insert(button)
-  self.total_height = self.total_height + (button.height + self.margin);
+  self._total_height = self._total_height + (button.height + self.margin);
   table.insert(self.group , button);
 end
 
@@ -24,10 +24,10 @@ function ButtonGroup:draw(ww,wh)
   local bx = 0;
   local by = 0;
   for i,button in ipairs(self.group) do
-    button.last = button.now;
+    button._last = button._now;
     bx = Cww - (button.width * 0.5);
-    by = Cwh - (self.total_height  * 0.5) + cursor_y;
-    
+    by = Cwh - (self._total_height  * 0.5) + cursor_y;
+
     local mx,my = love.mouse.getPosition();
     local isHover = mx > bx and mx < bx + button.width and
                     my > by and my < by + button.height;
@@ -37,8 +37,8 @@ function ButtonGroup:draw(ww,wh)
       love.graphics.setColor(unpack(button.bgColor));
     end
 
-    button.now = love.mouse.isDown(1);
-    if button.now and not button.last and isHover then
+    button._now = love.mouse.isDown(1);
+    if button._now and not button._last and isHover then
       button.callback();
     end
     love.graphics.rectangle("fill",

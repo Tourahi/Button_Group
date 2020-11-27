@@ -14,8 +14,8 @@ function Button.new(text,callback,height,width
     hoverColor = hoverColor,
     borderRadiusX = borderRadiusX or 0,
     borderRadiusY = borderRadiusY or 0,
-    now = false,
-    last = false
+    _now = false,
+    _last = false
   },Button);
 end
 
